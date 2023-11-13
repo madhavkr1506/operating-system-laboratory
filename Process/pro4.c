@@ -1,0 +1,38 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<sys/types.h>
+#include<sys/wait.h>
+#include<unistd.h>
+int main(){
+	pid_t p1,p2,p3,p4,p5,p6,p7;
+	printf("it is root process having id %d and parent id %d\n",getpid(),getppid());
+	if((p2 = fork()) == 0){
+		printf("this is child process two having id %d and parent id is %d\n",getpid(),getppid());
+		if((p3 = fork()) == 0){
+			printf("this is child process three having id %d and parent id is %d\n",getpid(),getppid());
+			if((p4 = fork()) == 0){
+				printf("this is child process having id %d  and parent id is %d\n",getpid(),getppid());
+				sleep(2);
+				printf("this is now orphan process having id %d\n",getpid());
+			}
+		}
+	}
+	if((p5 = fork()) == 0){
+		printf("this is child process five having id %d and parent id is %d\n",getpid(),getppid());
+		if((p6 = fork()) == 0){
+			printf("this is child process six having id %d and parent id is %d\n",getpid(),getppid());
+			if((p7 = fork()) == 0){
+				printf("this is child process seven having id %d and parent id is %d\n",getpid(),getppid());
+				return 0;
+			}
+		}
+	}
+	wait(NULL);
+	wait(NULL);
+	wait(NULL);
+	wait(NULL);
+	wait(NULL);
+	wait(NULL);
+
+return 0;
+}
